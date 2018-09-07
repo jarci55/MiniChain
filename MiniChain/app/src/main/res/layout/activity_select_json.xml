@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectJSON">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/primary_dark_material_light_1"
+        />
+
+    <Button
+        android:id="@+id/runTestButton"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="166dp"
+        android:background="@color/colorWhite"
+        android:text="Run Scenario"
+        />
+
+
+    <Button
+        android:id="@+id/viewTestButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="232dp"
+        android:background="@color/primary_dark_material_light_1"
+        android:text="View JSON File"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/viewComparisonFileButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="115dp"
+        android:background="#f9fd1d"
+        android:text="View Expected Outcome"
+        android:textColor="@color/primary_dark_material_light_1" />
+
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent"
+        android:text="Go Back"
+        android:textColor="@color/primary_dark_material_light_1"
+        />
+</RelativeLayout>

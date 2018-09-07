@@ -1,0 +1,29 @@
+{
+	"name": "Large Scale, scenario: 150 publish, 1 write, 450 transactions per second, JSON",
+	"seed": 123456789,
+	"start": 0,
+	"end": 1000,
+	"speed": 1,
+	"many_nodes":
+	[
+		{
+			"id_prefix": "publish",
+			"class": "SimulatedSalesTransactionNode",
+			"permission": 1,
+			"count": 150,
+			"speedUpload": 10000,
+			"speedDownload": 10000,
+			"transactionsPerSecond": 450,
+			"style": "json"
+		},
+		{
+			"id_prefix": "write",
+			"class": "SimulatedBlockWriteNode",
+			"permission": 2,
+			"count": 1,
+			"speedUpload": 10000,
+			"speedDownload": 10000,
+			"minTransactions": 450
+		}
+	]
+}
