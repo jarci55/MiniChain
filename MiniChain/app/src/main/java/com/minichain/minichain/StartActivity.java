@@ -1,6 +1,5 @@
 package com.minichain.minichain;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
+// Main Activity class implementing partly some of Vinarek's main class as well as contains functionality to extract signals
 
 
 public class StartActivity extends AppCompatActivity {
@@ -53,7 +53,7 @@ public class StartActivity extends AppCompatActivity {
 
         new MainTask().execute();
     }
-
+//AsyncTast class running the main process in the background while front end displays signals extracted from the running network
     class MainTask extends AsyncTask<Void, String, Void>{
 
         private ArrayAdapter mAdapter;
@@ -75,6 +75,10 @@ public class StartActivity extends AppCompatActivity {
                     ArrayList<String> watchSpecial = new ArrayList<>();
                     ArrayList<SimulatedNode> multipleNodes = new ArrayList<>();
                     ArrayList<String> nodeConnections = new ArrayList<>();
+                    String graphedNode = null;
+                    ArrayList<String> nodeGraphs = new ArrayList<>();
+
+                    ArrayList<String> networkGraphs = new ArrayList<>();
 
                     JsonReader reader;
 
@@ -356,6 +360,33 @@ public class StartActivity extends AppCompatActivity {
                                 reader.endObject();
                                 break;
 
+                            case "graphs":
+                                reader.beginObject();
+
+                                switch(reader.nextName()) {
+                                    case "network":
+                                        reader.beginArray();
+                                        while(reader.hasNext()) {
+                                            networkGraphs.add(reader.nextString());
+                                        }
+                                        reader.endArray();
+                                        break;
+                                    case "node":
+                                        reader.beginArray();
+
+                                        graphedNode = reader.nextString();
+
+                                        while(reader.hasNext()) {
+                                            nodeGraphs.add(reader.nextString());
+                                        }
+                                        reader.endArray();
+                                        break;
+                                }
+
+                                reader.endObject();
+
+                                break;
+
                             case "connections":
                                 reader.beginArray();
                                 while (reader.hasNext()) {
@@ -379,7 +410,7 @@ public class StartActivity extends AppCompatActivity {
 
                     for (SimulatedNode node : multipleNodes) {
                         node.addNetwork(network);
-                        Log.d(TAG, "doInBackground: ADDING NODE NETWORK ");
+//                        Log.d(TAG, "doInBackground: ADDING NODE NETWORK ");
                         }
 
                     if (nodeConnections.size() > 0) {
@@ -415,58 +446,58 @@ public class StartActivity extends AppCompatActivity {
 
                     System.out.println("Simulating network for " + limit + " ticks ...");
 
-                    while (true) {
+                while (true) {
 
-                        network.simulate();
+                    network.simulate();
 
-                        for (SimulatedNode node : multipleNodes){
-                            if (node instanceof MyTransactionNode) {
-                                node.setPayload(payload);
-                                if (((MyTransactionNode) node).trans != null) {
-                                    System.out.println(((MyTransactionNode) node).getTrans().getPayload());
-                                }
+                    for (SimulatedNode node : multipleNodes){
+                        if (node instanceof MyTransactionNode) {
+                            node.setPayload(payload);
+                            if (((MyTransactionNode) node).trans != null) {
+                                System.out.println(((MyTransactionNode) node).getTrans().getPayload());
                             }
                         }
-
-                        if (network.getCurrentTick() % 1000 == 0) {
-                            System.out.println("NETWORK: " + network.getCurrentTick());
-                            for (SimulatedNode mNode : multipleNodes) {
-                                mNode.addNetwork(network);
-                                Log.d(TAG, "doInBackground: mNode LOGGED");
-
-
-                                HashMap<Integer, ArrayList<SimulatedJob>> signals = network.getAllSignals();
-                                ArrayList<Integer> signalTimes = new ArrayList<>(signals.keySet());
-                                Collections.sort(signalTimes);
-                                Iterator<Integer> iterator = signalTimes.iterator();
-                                while (iterator.hasNext()) {
-
-                                    Integer key = iterator.next();
+                    }
+            //Functionality containing loosto extract signals flowing through the network
+                    if (network.getCurrentTick() % 1000 == 0) {
+                        System.out.println("NETWORK: " + network.getCurrentTick());
+                        for (SimulatedNode mNode : multipleNodes) {
+                            mNode.addNetwork(network);
+                            Log.d(TAG, "doInBackground: mNode LOGGED");
 
 
-                                    ArrayList<SimulatedJob> jobs = signals.get(key);
-                                    for (SimulatedJob job : jobs) {
-                                        String target = job.getTarget();
-                                        if (target.equals(mNode.getId())) {
-                                            if (job.signal.getType() == 3) {
-                                                if(!hashes.contains(job.signal.getHash())) {
-                                                    hashes.add(job.signal.getHash());
-                                                }
+                            HashMap<Integer, ArrayList<SimulatedJob>> signals = network.getAllSignals();
+                            ArrayList<Integer> signalTimes = new ArrayList<>(signals.keySet());
+                            Collections.sort(signalTimes);
+                            Iterator<Integer> iterator = signalTimes.iterator();
+                            while (iterator.hasNext()) {
+
+                                Integer key = iterator.next();
+
+
+                                ArrayList<SimulatedJob> jobs = signals.get(key);
+                                for (SimulatedJob job : jobs) {
+                                    String target = job.getTarget();
+                                    if (target.equals(mNode.getId())) {
+                                        if (job.signal.getType() == 3) {
+                                            if(!hashes.contains(job.signal.getHash())) {
+                                                hashes.add(job.signal.getHash());
                                             }
                                         }
                                     }
                                 }
                             }
-                            System.out.println(hashes);
-
-                            for(String hash:hashes){
-                                publishProgress(hash);
-                            }
                         }
-                        if (network.getCurrentTick() >= limit) {
-                            break;
+                        System.out.println(hashes);
+
+                        for(String hash:hashes){
+                            publishProgress(hash);
                         }
                     }
+                    if (network.getCurrentTick() >= limit) {
+                        break;
+                    }
+                }
 
                     System.out.println("Simulation finished.");
                     network.log.getComparisonStats();
@@ -496,15 +527,17 @@ public class StartActivity extends AppCompatActivity {
 
             return null;
         }
-
+    //Displays signal hashes added to the hash arraylist from the back-end
         @Override
         protected void onProgressUpdate(String... values) {
-            mAdapter.add(values[0]);
+           mAdapter.add(values[0]);
 
         }
-
+    //On completion of simulation sends message
         @Override
         protected void onPostExecute(Void aVoid) {
+            mAdapter.clear();
+            mAdapter.add("Simulation finished!");
 
         }
     }

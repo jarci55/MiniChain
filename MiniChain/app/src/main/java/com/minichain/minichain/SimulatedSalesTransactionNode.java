@@ -16,8 +16,8 @@ public class SimulatedSalesTransactionNode extends SimulatedNode {
 
     public void setChangeForTransaction(int total, int desired) {
         this.chance = ((double)desired / (double)total) / 1000.0;
-    }
 
+    }
 
 
     @Override

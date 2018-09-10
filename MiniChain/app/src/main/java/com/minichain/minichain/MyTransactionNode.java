@@ -1,5 +1,8 @@
 package com.minichain.minichain;
 
+
+// Amended TransactionNode class containing modified executeSpecificLogic()function to execute Mystransaction class with custom Payload
+
 public class MyTransactionNode extends SimulatedNode {
 
     private int lastBatch;
@@ -18,7 +21,6 @@ public class MyTransactionNode extends SimulatedNode {
     public void setTicksPerTransaction(int ticks) {
         this.ticksPerTransaction = ticks;
     }
-
 
 
 

@@ -68,6 +68,8 @@ public class SimulatedNetwork {
         return this.tickSpeed;
     }
 
+
+    //getter to extraxt signals from the network
     public HashMap<Integer, ArrayList<SimulatedJob>> getAllSignals() {
         return allSignals;
     }
@@ -121,7 +123,7 @@ public class SimulatedNetwork {
                     String target = job.getTarget();
                     this.nodes.get(target).executeIncomingConnection(job, this.currentTick);
                 }
-
+            // added command to log all of the netwrok signals
                 allSignals.putAll(pendingSignals);
                 this.pendingSignals.remove(key);
 

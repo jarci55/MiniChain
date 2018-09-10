@@ -78,6 +78,7 @@ public abstract class NodeSignal {
      */
     @Override
     public String toString() {
+
         return this.type+" "+this.origin+" "+this.payload;
     }
 

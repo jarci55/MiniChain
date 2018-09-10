@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-
+// Class containing helper functions catching IOException; used for reading and writing JSON files
 public class IOHelper {
 
     public static String stringFromStream(InputStream is) {

@@ -7,6 +7,8 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 
+//Class displying the txt file of expected outcome
+
 public class ViewExpected extends AppCompatActivity {
     TextView textView;
     Bundle bundle;

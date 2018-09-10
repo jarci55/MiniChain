@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// Interface class - contains 2 Buttons pointing to selecting pre-set scenarios or to create custom ones
+
 public class MainActivity extends AppCompatActivity {
 
     public Button selectButton;

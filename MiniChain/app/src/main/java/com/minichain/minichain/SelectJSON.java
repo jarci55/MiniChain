@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+//Activity class containing buttons allowing to launch scenario, view scenario JSON file or to view Expected .txt file
 public class SelectJSON extends AppCompatActivity {
 
 
@@ -65,6 +66,9 @@ public class SelectJSON extends AppCompatActivity {
 
         viewExpectedButton = (Button) findViewById(R.id.viewComparisonFileButton);
         if (selectedTest.equals("Tests/default.json")){
+            viewExpectedButton.setVisibility(View.INVISIBLE);
+        }
+        else if (selectedTest.equals("Tests/large_scale_test.json")){
             viewExpectedButton.setVisibility(View.INVISIBLE);
         }
         viewExpectedButton.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +131,15 @@ public class SelectJSON extends AppCompatActivity {
         }
         else if (current.equals("Large_Scale_Scenario")){
             selectedTest = "Tests/large_scale_test.json";
+        }
+        else if (current.equals("Large_Scale_Scenario_1")){
+            selectedTest = "Tests/power_efficiency_1.json";
+        }
+        else if (current.equals("Large_Scale_Scenario_2")){
+            selectedTest = "Tests/power_efficiency_2.json";
+        }
+        else if (current.equals("Large_Scale_Scenario_3")){
+            selectedTest = "Tests/power_efficiency_3.json";
         }
 
     }

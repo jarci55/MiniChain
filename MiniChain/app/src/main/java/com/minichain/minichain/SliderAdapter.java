@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+//Activity class containing slider adapter for the introduction animation
+//explaining the overall intention behind the design of the application
+
 public class SliderAdapter extends PagerAdapter {
 
     private static final String TAG ="SliderView";

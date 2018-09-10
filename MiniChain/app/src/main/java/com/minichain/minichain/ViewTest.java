@@ -8,6 +8,8 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+//class containing Activity displaying the JSON file of preset scenarios
+
 public class ViewTest extends AppCompatActivity {
 
     Context context;
